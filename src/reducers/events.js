@@ -17,6 +17,9 @@ export default function eventReducer(state = initialState, action) {
     case "FETCH_ONE_TICKET": {
       return { ...state, selectedTicket: action.ticket };
     }
+    case "FETCH_USER_TICKETS": {
+      return { ...state, userTickets: action.tickets };
+    }
     default: {
       return state;
     }

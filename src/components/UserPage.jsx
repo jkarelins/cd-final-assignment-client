@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import AllEvents from "./AllEvents";
+import MyTickets from "./MyTickets";
 
 class UserPage extends Component {
   render() {
@@ -11,6 +12,7 @@ class UserPage extends Component {
         <p>List of all events</p>
         <AllEvents />
         <p>List of my tickets for events</p>
+        <MyTickets />
         <p>All events</p>
       </div>
     );

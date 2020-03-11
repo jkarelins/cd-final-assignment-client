@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { fetchEvents } from "../actions/event";
 import { Link } from "react-router-dom";
 
-class App extends Component {
+class AllEvents extends Component {
   state = {
     page: 1
   };
@@ -43,4 +43,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchEvents })(App);
+export default connect(mapStateToProps, { fetchEvents })(AllEvents);
