@@ -14,6 +14,9 @@ class App extends Component {
     } else {
       return (
         <div>
+          <h5 className="text-center">
+            To add new event, You should Log In or Sign Up
+          </h5>
           <AllEvents />
         </div>
       );

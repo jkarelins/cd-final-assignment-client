@@ -20,19 +20,38 @@ class Header extends Component {
   render() {
     if (this.props.user) {
       return (
-        <div>
-          <p>Welcome back: {this.props.user.username}</p>
-          <button onClick={this.logOut}>LOG OUT</button>
-        </div>
+        <nav className="navbar navbar-lg navbar-light bg-light d-flex flex-row justify-content-start">
+          <p className="navbar-brand">TicketSwap Clone</p>
+          <h5 className="ml-auto">Welcome back: {this.props.user.username}</h5>
+          <button
+            className="ml-auto mr-3 btn btn-sm btn-outline-danger"
+            onClick={this.logOut}
+          >
+            LOG OUT
+          </button>
+        </nav>
       );
     } else {
       return (
-        <div>
+        <nav className="navbar navbar-lg navbar-light bg-light d-flex flex-row justify-content-start">
+          <p className="navbar-brand">TicketSwap Clone</p>
           {this.state.login ? <LoginForm /> : <SignUpForm />}
-          <button onClick={this.loginToSignUp}>
-            {this.state.login ? `To Sign Up` : `To Login`}
-          </button>
-        </div>
+          {this.state.login ? (
+            <button
+              className="btn btn-sm btn-warning ml-auto mr-3"
+              onClick={this.loginToSignUp}
+            >
+              To Sign Up Form
+            </button>
+          ) : (
+            <button
+              className="btn btn-sm btn-success ml-auto mr-3"
+              onClick={this.loginToSignUp}
+            >
+              To Login Form
+            </button>
+          )}
+        </nav>
       );
     }
   }

@@ -16,21 +16,30 @@ class AllEvents extends Component {
   render() {
     if (this.props.events.allEvents) {
       return (
-        <div>
-          <ul>
+        <div className="container mt-3">
+          <div className="row">
             {this.props.events.allEvents.map((event, id) => (
-              <li key={id}>
-                <Link to={`/event/${event.id}`}>{event.name}</Link>
-              </li>
+              <div className="card col-10 col-md-6 col-lg-4 col-xl-4" key={id}>
+                <img src={event.logo} alt={event.name} />
+                <div className="card-body">
+                  <h5 className="card-title">{event.name}</h5>
+
+                  <Link to={`/event/${event.id}`} className="btn btn-primary">
+                    SHOW TICKETS
+                  </Link>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       );
     } else {
       return (
-        <h4>
-          Sorry, no events found yet. But You can be first to add new one.
-        </h4>
+        <div className="container">
+          <h4>
+            Sorry, no events found yet. But You can be first to add new one.
+          </h4>
+        </div>
       );
     }
   }

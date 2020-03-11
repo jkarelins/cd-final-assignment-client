@@ -41,13 +41,17 @@ class UpdateAndShowEvent extends Component {
   render() {
     if (this.props.event.selectedEvent) {
       return (
-        <div>
-          <Link to="/">Go Home</Link>
-          <ShowEvent
-            event={this.props.event.selectedEvent}
-            user={this.props.user}
-            showToEdit={this.showToEdit}
-          />
+        <div className="container">
+          <Link to="/" className="btn btn-info">
+            Go Home
+          </Link>
+          <div className="row">
+            <ShowEvent
+              event={this.props.event.selectedEvent}
+              user={this.props.user}
+              showToEdit={this.showToEdit}
+            />
+          </div>
         </div>
       );
     } else {
