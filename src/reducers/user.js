@@ -8,6 +8,9 @@ export default function userReducer(state = initialState, action) {
     case "LOG_IN__USER": {
       return action.user;
     }
+    case "LOG_OUT_USER": {
+      return initialState;
+    }
     default: {
       return state;
     }

@@ -26,12 +26,29 @@ class ShowEvent extends Component {
     });
   };
 
-  submitNewTicket = (e, id) => {
+  submitNewTicket = e => {
     e.preventDefault();
-    this.props.createTicket(id, this.state);
+    this.props.createTicket(this.props.event.id, this.state);
+    this.setState(initialState);
   };
 
   render() {
+    if (this.props.event.tickets) {
+      const { tickets } = this.props.event;
+      const average =
+        tickets.reduce((a, b) => {
+          return a + b.price;
+        }, 0) / tickets.length;
+
+      tickets.forEach(ticket => {
+        let risk = ticket.risk;
+        risk = ticket.comments.length <= 3 ? risk : risk + 5;
+        const diff = -Math.round((ticket.price / average - 1) * 100);
+        risk = diff <= -10 ? (risk = risk - 10) : (risk = risk + diff);
+        risk = Math.max(5, risk);
+        ticket.risk = Math.min(95, risk);
+      });
+    }
     return (
       <div>
         <h1>Single Event Show Page:</h1>
@@ -42,13 +59,12 @@ class ShowEvent extends Component {
           <div key={i}>
             <Link to={`/ticket/${ticket.id}`}>
               <h5>{ticket.price} EUR</h5>
-              <img src={ticket.image} alt="Ticket for event" />
             </Link>
           </div>
         ))}
         <button onClick={this.addTicket}>Add New Ticket</button>
         {this.state.addTicket ? (
-          <form onSubmit={e => this.submitNewTicket(e, this.props.event.id)}>
+          <form onSubmit={e => this.submitNewTicket(e)}>
             <h4>Add new Ticket:</h4>
             <textarea
               name="ticketDescription"
@@ -85,4 +101,10 @@ class ShowEvent extends Component {
   }
 }
 
-export default connect(null, { createTicket })(ShowEvent);
+function mapStateToProps(state) {
+  return {
+    user: state.userReducer
+  };
+}
+
+export default connect(mapStateToProps, { createTicket })(ShowEvent);

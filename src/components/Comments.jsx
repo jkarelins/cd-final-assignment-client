@@ -12,7 +12,7 @@ class Comments extends Component {
   newComment = e => {
     e.preventDefault();
     this.props.sendNewComment(this.state);
-    this.setState(initialState);
+    this.setState({ ...initialState, ticketId: this.state.ticketId });
   };
 
   handleChange = e => {

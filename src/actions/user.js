@@ -2,6 +2,7 @@ import axios from "axios";
 const SIGN_UP_USER = "SIGN_UP_USER";
 const LOG_IN_USER = "LOG_IN__USER";
 const FETCH_USER_TICKETS = "FETCH_USER_TICKETS";
+const LOG_OUT_USER = "LOG_OUT_USER";
 
 const baseUrl = "http://localhost:4000";
 
@@ -45,4 +46,13 @@ export const fetchUserTickets = userId => dispatch => {
       dispatch(userTicketsFetchSuccess(response.data));
     })
     .catch(console.error);
+};
+
+const userLogOutSuccess = () => ({
+  type: LOG_OUT_USER,
+  logout: true
+});
+
+export const logMeOut = () => dispatch => {
+  dispatch(userLogOutSuccess());
 };

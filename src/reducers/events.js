@@ -3,7 +3,11 @@ const initialState = {};
 export default function eventReducer(state = initialState, action) {
   switch (action.type) {
     case "CREATE_NEW_EVENT": {
-      return { ...state, lastAddedEvent: action.event };
+      return {
+        ...state,
+        lastAddedEvent: action.event,
+        allEvents: [...state.allEvents, action.event]
+      };
     }
     case "FETCH_ALL_EVENTS": {
       return { ...state, allEvents: action.events };
@@ -12,7 +16,13 @@ export default function eventReducer(state = initialState, action) {
       return { ...state, selectedEvent: action.event };
     }
     case "CREATE_NEW_TICKET": {
-      return { ...state, lastTicketAdded: action.ticket };
+      return {
+        ...state,
+        selectedEvent: {
+          ...state.selectedEvent,
+          tickets: [...state.selectedEvent.tickets, action.ticket]
+        }
+      };
     }
     case "FETCH_ONE_TICKET": {
       return { ...state, selectedTicket: action.ticket };
@@ -25,16 +35,27 @@ export default function eventReducer(state = initialState, action) {
       const { selectedTicket } = state;
       return {
         ...state,
-        selectedTicket: { ...selectedTicket, ...ticket }
+        selectedTicket: {
+          restTickets: [...selectedTicket.restTickets],
+          ticket: {
+            ...ticket,
+            user: state.selectedTicket.ticket.user,
+            event: state.selectedTicket.ticket.event,
+            comments: state.selectedTicket.ticket.comments
+          }
+        }
       };
     }
     case "CREATE_NEW_COMMENT": {
-      const { selectedTicket } = state;
+      const { ticket } = state.selectedTicket;
       return {
         ...state,
         selectedTicket: {
-          ...selectedTicket,
-          comments: [...selectedTicket.comments, action.data]
+          ...state.selectedTicket,
+          ticket: {
+            ...ticket,
+            comments: [...ticket.comments, action.data]
+          }
         }
       };
     }

@@ -85,14 +85,26 @@ class ShowTicket extends Component {
           </div>
         );
       } else {
+        let risk = this.props.ticket.risk;
+        risk = this.props.ticket.comments.length <= 3 ? risk : risk + 5;
+        const diff = -Math.round(
+          (this.props.ticket.price / this.props.average - 1) * 100
+        );
+        risk = diff <= -10 ? (risk = risk - 10) : (risk = risk + diff);
+        risk = Math.max(5, risk);
+        risk = Math.min(95, risk);
+
         return (
           <div>
             <Link to="/">Go Home</Link>
-            <h4>{this.props.ticket.price} EUR</h4>
+            <h4>
+              {this.props.ticket.price} EUR / {this.props.average}
+            </h4>
             <img
               src={this.props.ticket.image}
               alt={`Ticket for ${this.props.ticket.event.name}`}
             />
+            <h3>Risk: {risk}%</h3>
             <h5>Description of Ticket</h5>
             <div>
               {this.props.user ? (
@@ -123,10 +135,22 @@ class ShowTicket extends Component {
 }
 
 function mapStateToProps(state) {
-  return {
-    ticket: state.eventReducer.selectedTicket,
-    user: state.userReducer
-  };
+  if (state.eventReducer.selectedTicket) {
+    const rest = state.eventReducer.selectedTicket.restTickets;
+    return {
+      ticket: state.eventReducer.selectedTicket.ticket,
+      //CALCULATES AVERAGE PRICE
+      average:
+        rest.reduce((a, b) => {
+          return a + b.price;
+        }, 0) / rest.length,
+      user: state.userReducer
+    };
+  } else {
+    return {
+      user: state.userReducer
+    };
+  }
 }
 
 export default connect(mapStateToProps, { fetchTicket, updateTicket })(
