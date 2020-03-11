@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchEvents } from "../actions/event";
+import { Link } from "react-router-dom";
 
 class App extends Component {
   state = {
@@ -18,7 +19,9 @@ class App extends Component {
         <div>
           <ul>
             {this.props.events.allEvents.map((event, id) => (
-              <li key={id}>{event.name}</li>
+              <li key={id}>
+                <Link to={`/event/${event.id}`}>{event.name}</Link>
+              </li>
             ))}
           </ul>
         </div>

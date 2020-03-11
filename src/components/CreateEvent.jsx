@@ -23,7 +23,7 @@ class CreateEvent extends Component {
   submitNewEvent = e => {
     e.preventDefault();
     this.props.createEvent(this.state);
-    this.setState(initialState);
+    this.props.history.push(`/`);
   };
   render() {
     if (this.props.user) {

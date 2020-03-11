@@ -5,6 +5,8 @@ import store from "./store";
 import Header from "./components/Header";
 import AppContent from "./components/AppContent";
 import CreateEvent from "./components/CreateEvent";
+import UpdateAndShowEvent from "./components/UpdateAndShowEvent";
+import ShowTicket from "./components/ShowTicket";
 
 class App extends Component {
   render() {
@@ -14,6 +16,8 @@ class App extends Component {
         <Switch>
           <Route path="/" exact component={AppContent} />
           <Route path="/create-event" exact component={CreateEvent} />
+          <Route path="/event/:id" component={UpdateAndShowEvent} />
+          <Route path="/ticket/:id" component={ShowTicket} />
         </Switch>
       </Provider>
     );
