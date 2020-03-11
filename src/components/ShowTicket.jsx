@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { fetchTicket } from "../actions/event";
+import { fetchTicket, updateTicket } from "../actions/event";
 import { Link } from "react-router-dom";
 const initialState = {
   id: 0,
@@ -39,9 +39,10 @@ class ShowTicket extends Component {
     this.setState({ editMode: false });
   };
 
-  submitEditedTicket = (e, ticketId) => {
+  submitEditedTicket = e => {
     e.preventDefault();
-    console.log("ticket id:", ticketId);
+    this.props.updateTicket(this.state);
+    this.setState({ editMode: false });
   };
 
   render() {
@@ -49,7 +50,7 @@ class ShowTicket extends Component {
       if (this.state.editMode) {
         return (
           <div>
-            <form onSubmit={e => this.submitEditedTicket(e, this.state.id)}>
+            <form onSubmit={e => this.submitEditedTicket(e)}>
               <h4>Add new Ticket:</h4>
               <textarea
                 name="ticketDescription"
@@ -123,4 +124,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { fetchTicket })(ShowTicket);
+export default connect(mapStateToProps, { fetchTicket, updateTicket })(
+  ShowTicket
+);

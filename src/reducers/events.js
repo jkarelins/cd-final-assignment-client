@@ -20,6 +20,14 @@ export default function eventReducer(state = initialState, action) {
     case "FETCH_USER_TICKETS": {
       return { ...state, userTickets: action.tickets };
     }
+    case "UPDATE_TICKET": {
+      const { ticket } = action;
+      const { selectedTicket } = state;
+      return {
+        ...state,
+        selectedTicket: { ...selectedTicket, ...ticket }
+      };
+    }
     default: {
       return state;
     }

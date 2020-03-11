@@ -6,6 +6,7 @@ const FETCH_ALL_EVENTS = "FETCH_ALL_EVENTS";
 const FETCH_ONE_EVENT = "FETCH_ONE_EVENT";
 const CREATE_NEW_TICKET = "CREATE_NEW_TICKET";
 const FETCH_ONE_TICKET = "FETCH_ONE_TICKET";
+const UPDATE_TICKET = "UPDATE_TICKET";
 
 const eventCreateSuccess = event => ({
   type: CREATE_NEW_EVENT,
@@ -88,6 +89,28 @@ export const fetchTicket = ticketId => (dispatch, getState) => {
     .get(`${baseUrl}/ticket/${ticketId}`)
     .then(res => {
       dispatch(ticketFetchSuccess(res.data));
+    })
+    .catch(console.error);
+};
+
+// UPDATE TICKET
+const ticketUpdateSuccess = ticket => ({
+  type: UPDATE_TICKET,
+  ticket
+});
+
+export const updateTicket = data => (dispatch, getState) => {
+  const { userReducer } = getState();
+  const { jwt } = userReducer;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+  axios
+    .post(`${baseUrl}/ticket/${data.id}`, {
+      ...data
+    })
+    .then(async response => {
+      await fetchTicket(response.data.id);
+      dispatch(ticketUpdateSuccess(response.data));
     })
     .catch(console.error);
 };
