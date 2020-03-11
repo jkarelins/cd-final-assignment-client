@@ -7,6 +7,7 @@ const FETCH_ONE_EVENT = "FETCH_ONE_EVENT";
 const CREATE_NEW_TICKET = "CREATE_NEW_TICKET";
 const FETCH_ONE_TICKET = "FETCH_ONE_TICKET";
 const UPDATE_TICKET = "UPDATE_TICKET";
+const CREATE_NEW_COMMENT = "CREATE_NEW_COMMENT";
 
 const eventCreateSuccess = event => ({
   type: CREATE_NEW_EVENT,
@@ -109,8 +110,29 @@ export const updateTicket = data => (dispatch, getState) => {
       ...data
     })
     .then(async response => {
-      await fetchTicket(response.data.id);
+      // await fetchTicket(response.data.id);
       dispatch(ticketUpdateSuccess(response.data));
+    })
+    .catch(console.error);
+};
+
+// POST NEW COMMENT
+const newCommentSuccess = data => ({
+  type: CREATE_NEW_COMMENT,
+  data
+});
+
+export const sendNewComment = data => (dispatch, getState) => {
+  const { userReducer } = getState();
+  const { jwt } = userReducer;
+  axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
+
+  axios
+    .post(`${baseUrl}/ticket/${data.ticketId}/comment`, {
+      text: data.text
+    })
+    .then(response => {
+      dispatch(newCommentSuccess(response.data));
     })
     .catch(console.error);
 };

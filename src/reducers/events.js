@@ -28,6 +28,16 @@ export default function eventReducer(state = initialState, action) {
         selectedTicket: { ...selectedTicket, ...ticket }
       };
     }
+    case "CREATE_NEW_COMMENT": {
+      const { selectedTicket } = state;
+      return {
+        ...state,
+        selectedTicket: {
+          ...selectedTicket,
+          comments: [...selectedTicket.comments, action.data]
+        }
+      };
+    }
     default: {
       return state;
     }

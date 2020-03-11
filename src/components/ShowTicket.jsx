@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { fetchTicket, updateTicket } from "../actions/event";
 import { Link } from "react-router-dom";
+import Comments from "./Comments";
+
 const initialState = {
   id: 0,
   image: "",
@@ -107,7 +109,10 @@ class ShowTicket extends Component {
               )}
             </div>
             <p>{this.props.ticket.ticketDescription}</p>
-            Comments going to be here
+            <Comments
+              comments={this.props.ticket.comments}
+              ticketId={this.props.ticket.id}
+            />
           </div>
         );
       }
