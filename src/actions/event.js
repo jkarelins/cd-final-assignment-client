@@ -36,9 +36,9 @@ const eventsFetchSuccess = events => ({
 
 export const fetchEvents = page => dispatch => {
   axios
-    .get(`${baseUrl}/event`)
+    .get(`${baseUrl}/event/allevents?offset=${page}`)
     .then(response => {
-      dispatch(eventsFetchSuccess(response.data));
+      dispatch(eventsFetchSuccess(response));
     })
     .catch(console.error);
 };

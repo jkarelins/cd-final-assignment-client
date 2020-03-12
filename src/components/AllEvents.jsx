@@ -3,15 +3,31 @@ import { connect } from "react-redux";
 import { fetchEvents } from "../actions/event";
 import { Link } from "react-router-dom";
 
+const initialState = {
+  offset: 0,
+  limit: 3
+};
+
 class AllEvents extends Component {
-  state = {
-    page: 1
-  };
+  state = initialState;
 
   componentDidMount() {
-    this.props.fetchEvents(this.state.page);
-    this.setState({ page: this.state.page + 1 });
+    if (this.props.events.allEvents) {
+      this.setState({
+        ...this.state,
+        offset: this.props.events.allEvents.length
+      });
+    } else {
+      this.setState(initialState);
+      this.props.fetchEvents(this.state.offset);
+      this.setState({ offset: this.state.offset + this.state.limit });
+    }
   }
+
+  loadMore = () => {
+    this.props.fetchEvents(this.state.offset);
+    this.setState({ offset: this.state.offset + this.state.limit });
+  };
 
   render() {
     if (this.props.events.allEvents) {
@@ -30,6 +46,15 @@ class AllEvents extends Component {
                 </div>
               </div>
             ))}
+          </div>
+          <div className="d-flex justify-content-center mt-3 mb-5">
+            {this.props.events.eventsCount <= this.state.offset ? (
+              <p className="text-danger">Sorry, no more events</p>
+            ) : (
+              <button className="btn btn-primary" onClick={this.loadMore}>
+                Load More
+              </button>
+            )}
           </div>
         </div>
       );

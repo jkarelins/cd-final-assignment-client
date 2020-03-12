@@ -6,11 +6,24 @@ export default function eventReducer(state = initialState, action) {
       return {
         ...state,
         lastAddedEvent: action.event,
-        allEvents: [...state.allEvents, action.event]
+        allEvents: [...state.allEvents, action.event],
+        eventsCount: state.eventsCount + 1
       };
     }
     case "FETCH_ALL_EVENTS": {
-      return { ...state, allEvents: action.events };
+      const { data, count } = action.events.data;
+      if (state.allEvents) {
+        return {
+          ...state,
+          allEvents: [...state.allEvents, ...data],
+          eventsCount: count
+        };
+      }
+      return {
+        ...state,
+        allEvents: data,
+        eventsCount: count
+      };
     }
     case "FETCH_ONE_EVENT": {
       return { ...state, selectedEvent: action.event };
