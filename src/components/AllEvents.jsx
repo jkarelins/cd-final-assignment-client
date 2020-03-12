@@ -16,7 +16,7 @@ class AllEvents extends Component {
   render() {
     if (this.props.events.allEvents) {
       return (
-        <div className="container mt-3">
+        <div className="container mt-3 mb-5">
           <div className="row">
             {this.props.events.allEvents.map((event, id) => (
               <div className="card col-10 col-md-6 col-lg-4 col-xl-4" key={id}>

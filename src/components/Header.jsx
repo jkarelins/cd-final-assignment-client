@@ -43,19 +43,31 @@ class Header extends Component {
           {this.state.login ? <LoginForm /> : <SignUpForm />}
           {this.state.login ? (
             <button
-              className="btn btn-sm btn-warning ml-auto mr-3"
+              className="btn btn-sm btn-warning mx-3"
               onClick={this.loginToSignUp}
             >
               To Sign Up Form
             </button>
           ) : (
             <button
-              className="btn btn-sm btn-success ml-auto mr-3"
+              className="btn btn-sm btn-success mx-3"
               onClick={this.loginToSignUp}
             >
               To Login Form
             </button>
           )}
+          <ul className="navbar-nav ml-auto flex-row">
+            <li className="nav-item">
+              <Link className="nav-link" to="/login">
+                Login
+              </Link>
+            </li>
+            <li className="nav-item ml-3">
+              <Link className="nav-link" to="/register">
+                Sign Up
+              </Link>
+            </li>
+          </ul>
         </nav>
       );
     }

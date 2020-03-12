@@ -7,6 +7,8 @@ import AppContent from "./components/AppContent";
 import CreateEvent from "./components/CreateEvent";
 import UpdateAndShowEvent from "./components/UpdateAndShowEvent";
 import ShowTicket from "./components/ShowTicket";
+import LoginPage from "./components/LoginPage";
+import RegisterPage from "./components/RegisterPage";
 
 class App extends Component {
   render() {
@@ -18,6 +20,8 @@ class App extends Component {
           <Route path="/create-event" exact component={CreateEvent} />
           <Route path="/event/:id" component={UpdateAndShowEvent} />
           <Route path="/ticket/:id" component={ShowTicket} />
+          <Route path="/login" component={LoginPage} />
+          <Route path="/register" component={RegisterPage} />
         </Switch>
       </Provider>
     );
