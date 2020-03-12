@@ -47,41 +47,69 @@ class ShowTicket extends Component {
     this.setState({ editMode: false });
   };
 
+  componentDidUpdate() {
+    if (!this.props.user && this.state.editMode) {
+      this.setState({
+        ...this.state,
+        editMode: false
+      });
+    }
+  }
+
   render() {
     if (this.props.ticket) {
       if (this.state.editMode) {
         return (
-          <div>
-            <form onSubmit={e => this.submitEditedTicket(e)}>
-              <h4>Add new Ticket:</h4>
-              <textarea
-                name="ticketDescription"
-                cols="30"
-                rows="10"
-                placeholder="Description"
-                onChange={this.handleChange}
-                value={this.state.ticketDescription}
-              />
-              <input
-                type="number"
-                name="price"
-                placeholder="Price"
-                min="1"
-                max="1000"
-                step="0"
-                onChange={this.handleChange}
-                value={this.state.price}
-              />
-              <input
-                type="text"
-                name="image"
-                placeholder="Image of ticket"
-                onChange={this.handleChange}
-                value={this.state.image}
-              />
-              <input type="submit" value="Save Changes" />
-            </form>
-            <button onClick={this.goBack}>Go Back</button>
+          <div className="container">
+            <div className="card p-5 mt-3">
+              <form onSubmit={e => this.submitEditedTicket(e)}>
+                <div className="form-group">
+                  <label htmlFor="ticketDescription">Ticket Description</label>
+                  <textarea
+                    name="ticketDescription"
+                    cols="30"
+                    rows="10"
+                    placeholder="Description"
+                    className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.ticketDescription}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="ticketPrice">Price</label>
+                  <input
+                    type="number"
+                    name="price"
+                    placeholder="Price"
+                    min="1"
+                    max="1000"
+                    step="0"
+                    className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.price}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="imageURL">Image URL</label>
+                  <input
+                    type="text"
+                    name="image"
+                    className="form-control"
+                    placeholder="Image of ticket"
+                    onChange={this.handleChange}
+                    value={this.state.image}
+                  />
+                </div>
+                <input
+                  type="submit"
+                  value="Save Changes"
+                  className="btn btn-success"
+                />
+                <button onClick={this.goBack} className="btn btn-danger ml-3">
+                  Go Back
+                </button>
+              </form>
+            </div>
           </div>
         );
       } else {

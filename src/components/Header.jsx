@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import LoginForm from "./LoginForm";
 import SignUpForm from "./SignUpForm";
 import { connect } from "react-redux";
@@ -21,7 +22,9 @@ class Header extends Component {
     if (this.props.user) {
       return (
         <nav className="navbar navbar-lg navbar-light bg-light d-flex flex-row justify-content-start">
-          <p className="navbar-brand">TicketSwap Clone</p>
+          <p className="navbar-brand">
+            <Link to="/">TicketSwap Clone</Link>
+          </p>
           <h5 className="ml-auto">Welcome back: {this.props.user.username}</h5>
           <button
             className="ml-auto mr-3 btn btn-sm btn-outline-danger"
@@ -34,7 +37,9 @@ class Header extends Component {
     } else {
       return (
         <nav className="navbar navbar-lg navbar-light bg-light d-flex flex-row justify-content-start">
-          <p className="navbar-brand">TicketSwap Clone</p>
+          <p className="navbar-brand">
+            <Link to="/">TicketSwap Clone</Link>
+          </p>
           {this.state.login ? <LoginForm /> : <SignUpForm />}
           {this.state.login ? (
             <button

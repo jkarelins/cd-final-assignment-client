@@ -83,8 +83,8 @@ class Comments extends Component {
           </ul>
         ) : (
           <div>
-            <h4>
-              Sorry. This ticket has no comments yet. Live your comment now.
+            <h4 className="mt-3">
+              Sorry. This ticket has no comments yet. Be first, comment now.
             </h4>
           </div>
         )}

@@ -94,6 +94,10 @@ class ShowEvent extends Component {
             />
             <div className="card-body">
               <h5 className="card-title">{this.props.event.name}</h5>
+              <p>
+                Event date: {""}
+                <u className="font-italic">{this.props.event.eventDate}</u>
+              </p>
             </div>
           </div>
           <div className="card mt-3">
@@ -206,6 +210,8 @@ class ShowEvent extends Component {
               {}
             </tbody>
           </table>
+          <h4>Event Description:</h4>
+          <p>{this.props.event.description}</p>
         </div>
       </Fragment>
     );
