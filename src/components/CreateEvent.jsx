@@ -33,60 +33,62 @@ class CreateEvent extends Component {
           <Link to="/" className="btn btn-info">
             Go Home
           </Link>
-          <form onSubmit={this.submitNewEvent}>
-            <div class="form-group">
-              <label for="eventName">Event Name</label>
+          <div className="card p-5 mt-3">
+            <form onSubmit={this.submitNewEvent}>
+              <div className="form-group">
+                <label htmlFor="eventName">Event Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="Event Name"
+                  onChange={e => this.handleChange(e)}
+                  value={this.state.name}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="eventLogoURL">Event Logo URL</label>
+                <input
+                  type="text"
+                  name="logo"
+                  placeholder="Event Logo URL"
+                  onChange={e => this.handleChange(e)}
+                  value={this.state.logo}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="eventDate">Event Date</label>
+                <input
+                  type="date"
+                  name="eventDate"
+                  onChange={e => this.handleChange(e)}
+                  value={this.state.eventDate}
+                  className="form-control"
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="eventDescription">Event Description</label>
+                <textarea
+                  name="description"
+                  rows="8"
+                  onChange={e => this.handleChange(e)}
+                  value={this.state.description}
+                  placeholder="Description of Event"
+                  className="form-control"
+                  required
+                ></textarea>
+              </div>
               <input
-                type="text"
-                name="name"
-                placeholder="Event Name"
-                onChange={e => this.handleChange(e)}
-                value={this.state.name}
-                className="form-control"
-                required
+                type="submit"
+                value="Add Event"
+                className="btn btn-success"
               />
-            </div>
-            <div class="form-group">
-              <label for="eventLogoURL">Event Logo URL</label>
-              <input
-                type="text"
-                name="logo"
-                placeholder="Event Logo URL"
-                onChange={e => this.handleChange(e)}
-                value={this.state.logo}
-                className="form-control"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="eventDate">Event Date</label>
-              <input
-                type="date"
-                name="eventDate"
-                onChange={e => this.handleChange(e)}
-                value={this.state.eventDate}
-                className="form-control"
-                required
-              />
-            </div>
-            <div class="form-group">
-              <label for="eventDescription">Event Description</label>
-              <textarea
-                name="description"
-                rows="8"
-                onChange={e => this.handleChange(e)}
-                value={this.state.description}
-                placeholder="Description of Event"
-                className="form-control"
-                required
-              ></textarea>
-            </div>
-            <input
-              type="submit"
-              value="Add Event"
-              className="btn btn-success"
-            />
-          </form>
+            </form>
+          </div>
         </div>
       );
     } else {
@@ -95,7 +97,7 @@ class CreateEvent extends Component {
           <Link to="/" className="btn btn-info">
             Go Home
           </Link>
-          <div class="alert alert-danger mt-3" role="alert">
+          <div className="alert alert-danger mt-3" role="alert">
             To Add New event You should login or sign up first.
           </div>
           <AllEvents />

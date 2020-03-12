@@ -16,6 +16,7 @@ export default function eventReducer(state = initialState, action) {
       return { ...state, selectedEvent: action.event };
     }
     case "CREATE_NEW_TICKET": {
+      action.ticket.comments = [];
       return {
         ...state,
         selectedEvent: {

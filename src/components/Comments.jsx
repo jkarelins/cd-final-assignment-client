@@ -39,9 +39,9 @@ class Comments extends Component {
           <u>Comments:</u>
         </h5>
         {this.props.user ? (
-          <form onSubmit={this.newComment} className="form-inline">
-            <div className="form-group row">
-              <div className="col-xs-4">
+          <form onSubmit={this.newComment}>
+            <div className="row">
+              <div className="col-9">
                 <input
                   type="text"
                   name="text"
@@ -51,11 +51,13 @@ class Comments extends Component {
                   onChange={this.handleChange}
                 />
               </div>
-              <input
-                type="submit"
-                value="Post Comment"
-                className="btn btn-success ml-3"
-              />
+              <div className="col-3">
+                <input
+                  type="submit"
+                  value="Post Comment"
+                  className="btn btn-success"
+                />
+              </div>
             </div>
           </form>
         ) : (
@@ -67,7 +69,7 @@ class Comments extends Component {
         {this.props.comments.length !== 0 ? (
           <ul>
             {this.props.comments.map((comment, i) => (
-              <div className="media" key={i}>
+              <div className="media mt-3" key={i}>
                 <div className="media-body">
                   <small>
                     Posted on: {this.convertToDate(comment.createdAt)}, by:{" "}
@@ -75,6 +77,7 @@ class Comments extends Component {
                   </small>
                   <p>{comment.text}</p>
                 </div>
+                <hr />
               </div>
             ))}
           </ul>

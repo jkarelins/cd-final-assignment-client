@@ -43,6 +43,21 @@ class ShowEvent extends Component {
     this.setState({ ...this.state, addTicket: false });
   };
 
+  componentDidUpdate = () => {
+    if (this.props.user && this.state.error) {
+      this.setState({
+        ...this.state,
+        error: "",
+        addTicket: true
+      });
+    } else if (!this.props.user && this.state.addTicket) {
+      this.setState({
+        ...this.state,
+        addTicket: false
+      });
+    }
+  };
+
   render() {
     if (this.props.event.tickets) {
       const { tickets } = this.props.event;
@@ -64,7 +79,7 @@ class ShowEvent extends Component {
       <Fragment>
         <div className="col-12 col-lg-4 col-xl-4 mt-3">
           {!this.props.user && this.state.error ? (
-            <div class="alert alert-danger" role="alert">
+            <div className="alert alert-danger" role="alert">
               {this.state.error}
             </div>
           ) : (
@@ -146,7 +161,7 @@ class ShowEvent extends Component {
             )}
           </div>
         </div>
-        <div className="ml-5 col-12 col-lg-6 col-xl-6 mt-3">
+        <div className="col-12 col-lg-8 col-xl-8 mt-3">
           <table className="table">
             <thead className="thead-dark">
               <tr>
@@ -183,7 +198,7 @@ class ShowEvent extends Component {
                             : "text-danger"
                         }
                       >
-                        @mdo
+                        {ticket.ticketDescription.substring(0, 20)}
                       </td>
                     </tr>
                   ))
