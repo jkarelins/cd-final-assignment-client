@@ -95,36 +95,53 @@ class ShowTicket extends Component {
         risk = Math.min(95, risk);
 
         return (
-          <div>
-            <Link to="/">Go Home</Link>
-            <h4>
-              {this.props.ticket.price} EUR / {this.props.average}
-            </h4>
-            <img
-              src={this.props.ticket.image}
-              alt={`Ticket for ${this.props.ticket.event.name}`}
-            />
-            <h3>Risk: {risk}%</h3>
-            <h5>Description of Ticket</h5>
-            <div>
-              {this.props.user ? (
-                this.props.user.id === this.props.ticket.user.id ? (
-                  <div>
-                    <p>This is your Ticket</p>
-                    <button onClick={this.editTicket}>Edit Ticket</button>
-                  </div>
-                ) : (
-                  <p>Ticket is sold by: {this.props.ticket.user.username}</p>
-                )
-              ) : (
-                <p>Ticket is sold by: {this.props.ticket.user.username}</p>
-              )}
+          <div className="container mb-5">
+            <Link to="/" className="btn btn-info">
+              Go Home
+            </Link>
+            <div className="card p-3 mt-3">
+              <div className="card-header">
+                <h4 className="">
+                  Ticket from: {this.props.ticket.user.username}
+                </h4>
+                <h5>Fraud risk: {risk}%</h5>
+              </div>
+              <div className="card-body">
+                <h2 className="card-title">
+                  Price: EUR {this.props.ticket.price}
+                </h2>
+                <img
+                  src={this.props.ticket.image}
+                  alt={`Ticket for ${this.props.ticket.event.name}`}
+                />
+                <p className="card-text mt-3">
+                  {this.props.ticket.ticketDescription}
+                </p>
+                <div>
+                  {this.props.user ? (
+                    this.props.user.id === this.props.ticket.user.id ? (
+                      <div>
+                        <p>This is your Ticket</p>
+                        <button
+                          onClick={this.editTicket}
+                          className="btn btn-primary"
+                        >
+                          Edit Ticket
+                        </button>
+                      </div>
+                    ) : (
+                      <p>You can edit your tickets.</p>
+                    )
+                  ) : (
+                    <p>You can edit your tickets.</p>
+                  )}
+                </div>
+              </div>
+              <Comments
+                comments={this.props.ticket.comments}
+                ticketId={this.props.ticket.id}
+              />
             </div>
-            <p>{this.props.ticket.ticketDescription}</p>
-            <Comments
-              comments={this.props.ticket.comments}
-              ticketId={this.props.ticket.id}
-            />
           </div>
         );
       }

@@ -6,8 +6,9 @@ import { Link } from "react-router-dom";
 const initialState = {
   addTicket: false,
   ticketDescription: "",
-  price: 0,
-  image: ""
+  price: 10,
+  image: "",
+  error: ""
 };
 
 class ShowEvent extends Component {
@@ -15,7 +16,12 @@ class ShowEvent extends Component {
 
   addTicket = () => {
     if (this.props.user) {
-      this.setState({ addTicket: true });
+      this.setState({ ...this.state, addTicket: true });
+    } else {
+      this.setState({
+        ...this.state,
+        error: "Login or SignUp first, to add ticket!"
+      });
     }
   };
 
@@ -30,6 +36,11 @@ class ShowEvent extends Component {
     e.preventDefault();
     this.props.createTicket(this.props.event.id, this.state);
     this.setState(initialState);
+  };
+
+  cancelNewTicket = e => {
+    e.preventDefault();
+    this.setState({ ...this.state, addTicket: false });
   };
 
   render() {
@@ -52,8 +63,20 @@ class ShowEvent extends Component {
     return (
       <Fragment>
         <div className="col-12 col-lg-4 col-xl-4 mt-3">
+          {!this.props.user && this.state.error ? (
+            <div class="alert alert-danger" role="alert">
+              {this.state.error}
+            </div>
+          ) : (
+            ""
+          )}
+
           <div className="card">
-            <img src={this.props.event.logo} alt={this.props.event.name} />
+            <img
+              src={this.props.event.logo}
+              alt={this.props.event.name}
+              className="img-fluid"
+            />
             <div className="card-body">
               <h5 className="card-title">{this.props.event.name}</h5>
             </div>
@@ -64,70 +87,114 @@ class ShowEvent extends Component {
             </button>
             {this.state.addTicket ? (
               <form onSubmit={e => this.submitNewTicket(e)}>
-                <h4>Add new Ticket:</h4>
-                <textarea
-                  name="ticketDescription"
-                  cols="30"
-                  rows="10"
-                  placeholder="Description"
-                  onChange={this.handleChange}
-                  value={this.state.ticketDescription}
-                />
-                <input
-                  type="number"
-                  name="price"
-                  placeholder="Price"
-                  min="1"
-                  max="1000"
-                  step="0"
-                  onChange={this.handleChange}
-                  value={this.state.price}
-                />
-                <input
-                  type="text"
-                  name="image"
-                  placeholder="Image of ticket"
-                  onChange={this.handleChange}
-                  value={this.state.image}
-                />
-                <input type="submit" value="Add Ticket" />
+                <div className="form-group mt-3">
+                  <label htmlFor="newTicketDescription">
+                    New Ticket Description
+                  </label>
+                  <textarea
+                    name="ticketDescription"
+                    cols="30"
+                    rows="10"
+                    placeholder="Description"
+                    className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.ticketDescription}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="Price">Price</label>
+                  <input
+                    type="number"
+                    name="price"
+                    placeholder="Price"
+                    min="1"
+                    max="1000"
+                    step="0"
+                    className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.price}
+                  />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="imageURL">Image URL</label>
+                  <input
+                    type="text"
+                    name="image"
+                    placeholder="Image URL"
+                    className="form-control"
+                    onChange={this.handleChange}
+                    value={this.state.image}
+                  />
+                </div>
+                <div className="form-group text-center">
+                  <input
+                    type="submit"
+                    className="btn btn-success"
+                    value="PUBLISH TICKET"
+                  />
+                  <button
+                    type="button"
+                    className="ml-3 btn btn-danger"
+                    onClick={e => this.cancelNewTicket(e)}
+                  >
+                    CANCEL
+                  </button>
+                </div>
               </form>
             ) : (
               ""
             )}
           </div>
         </div>
-        <div className="col-12 col-lg-6 col-xl-6 mt-3">
-          <h5>Tickets in sale:</h5>
-          {this.props.event.tickets
-            .sort((a, b) => a.risk - b.risk)
-            .map((ticket, i) => (
-              <div key={i}>
-                <Link to={`/ticket/${ticket.id}`}>
-                  <h5
-                    className={
-                      ticket.risk < 33
-                        ? `text-success`
-                        : ticket.risk < 66
-                        ? "text-warning"
-                        : "text-danger"
-                    }
-                  >
-                    {ticket.price} EUR
-                  </h5>
-                </Link>
-              </div>
-            ))}
+        <div className="ml-5 col-12 col-lg-6 col-xl-6 mt-3">
+          <table className="table">
+            <thead className="thead-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Seller</th>
+                <th scope="col">Price EUR</th>
+                <th scope="col">Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {this.props.event.tickets.length === 0 ? (
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>Sorry, no tickets added yet</td>
+                </tr>
+              ) : (
+                this.props.event.tickets
+                  .sort((a, b) => a.risk - b.risk)
+                  .map((ticket, i) => (
+                    <tr key={i}>
+                      <th scope="row">{i + 1}</th>
+                      <td>{ticket.user.username}</td>
+                      <td>
+                        <Link to={`/ticket/${ticket.id}`}>{ticket.price}</Link>
+                      </td>
+                      <td
+                        className={
+                          ticket.risk < 33
+                            ? `text-success`
+                            : ticket.risk < 66
+                            ? "text-warning"
+                            : "text-danger"
+                        }
+                      >
+                        @mdo
+                      </td>
+                    </tr>
+                  ))
+              )}
+              {}
+            </tbody>
+          </table>
         </div>
       </Fragment>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
-    user: state.userReducer
-  };
-}
-
-export default connect(mapStateToProps, { createTicket })(ShowEvent);
+export default connect(null, { createTicket })(ShowEvent);

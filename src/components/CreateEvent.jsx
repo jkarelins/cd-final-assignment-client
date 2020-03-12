@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
 import { createEvent } from "../actions/event";
+import AllEvents from "./AllEvents";
 
 const initialState = {
   name: "",
@@ -28,45 +29,76 @@ class CreateEvent extends Component {
   render() {
     if (this.props.user) {
       return (
-        <div>
+        <div className="container">
+          <Link to="/" className="btn btn-info">
+            Go Home
+          </Link>
           <form onSubmit={this.submitNewEvent}>
+            <div class="form-group">
+              <label for="eventName">Event Name</label>
+              <input
+                type="text"
+                name="name"
+                placeholder="Event Name"
+                onChange={e => this.handleChange(e)}
+                value={this.state.name}
+                className="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="eventLogoURL">Event Logo URL</label>
+              <input
+                type="text"
+                name="logo"
+                placeholder="Event Logo URL"
+                onChange={e => this.handleChange(e)}
+                value={this.state.logo}
+                className="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="eventDate">Event Date</label>
+              <input
+                type="date"
+                name="eventDate"
+                onChange={e => this.handleChange(e)}
+                value={this.state.eventDate}
+                className="form-control"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="eventDescription">Event Description</label>
+              <textarea
+                name="description"
+                rows="8"
+                onChange={e => this.handleChange(e)}
+                value={this.state.description}
+                placeholder="Description of Event"
+                className="form-control"
+                required
+              ></textarea>
+            </div>
             <input
-              type="text"
-              name="name"
-              placeholder="Event Name"
-              onChange={e => this.handleChange(e)}
-              value={this.state.name}
+              type="submit"
+              value="Add Event"
+              className="btn btn-success"
             />
-            <input
-              type="text"
-              name="logo"
-              placeholder="Event Logo URL"
-              onChange={e => this.handleChange(e)}
-              value={this.state.logo}
-            />
-            <input
-              type="date"
-              name="eventDate"
-              onChange={e => this.handleChange(e)}
-              value={this.state.eventDate}
-            />
-            <textarea
-              name="description"
-              rows="4"
-              cols="50"
-              onChange={e => this.handleChange(e)}
-              value={this.state.description}
-              placeholder="Description of Event"
-            ></textarea>
-            <input type="submit" value="Add Event" />
           </form>
         </div>
       );
     } else {
       return (
-        <div>
-          <Link to="/">GO HOME</Link>
-          <p>List of all events</p>
+        <div className="container">
+          <Link to="/" className="btn btn-info">
+            Go Home
+          </Link>
+          <div class="alert alert-danger mt-3" role="alert">
+            To Add New event You should login or sign up first.
+          </div>
+          <AllEvents />
         </div>
       );
     }

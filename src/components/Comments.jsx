@@ -22,37 +22,68 @@ class Comments extends Component {
     });
   };
 
+  convertToDate = seqDate => {
+    const newDate = new Date(seqDate);
+    return newDate.toDateString();
+  };
+
   componentDidMount() {
     this.setState({ ...this.state, ticketId: this.props.ticketId });
   }
 
   render() {
     return (
-      <div>
+      <div className="container">
+        <hr />
+        <h5>
+          <u>Comments:</u>
+        </h5>
         {this.props.user ? (
-          <form onSubmit={this.newComment}>
-            <input
-              type="text"
-              name="text"
-              placeholder="Comment Text"
-              value={this.state.text}
-              onChange={this.handleChange}
-            />
-            <input type="submit" value="Post Comment" />
+          <form onSubmit={this.newComment} className="form-inline">
+            <div className="form-group row">
+              <div className="col-xs-4">
+                <input
+                  type="text"
+                  name="text"
+                  placeholder="Comment Text"
+                  className="form-control"
+                  value={this.state.text}
+                  onChange={this.handleChange}
+                />
+              </div>
+              <input
+                type="submit"
+                value="Post Comment"
+                className="btn btn-success ml-3"
+              />
+            </div>
           </form>
         ) : (
-          <h4>You should Log In or Sign Up to comment on Tickets</h4>
+          <div>
+            <p>You should Log In or Sign Up to comment on Tickets</p>
+          </div>
         )}
 
-        <h4>Comments:</h4>
         {this.props.comments.length !== 0 ? (
           <ul>
             {this.props.comments.map((comment, i) => (
-              <li key={i}>{comment.text}</li>
+              <div className="media" key={i}>
+                <div className="media-body">
+                  <small>
+                    Posted on: {this.convertToDate(comment.createdAt)}, by:{" "}
+                    {comment.user.username}
+                  </small>
+                  <p>{comment.text}</p>
+                </div>
+              </div>
             ))}
           </ul>
         ) : (
-          <h4>Sorry. This ticket has no comments yet. You can be first:</h4>
+          <div>
+            <h4>
+              Sorry. This ticket has no comments yet. Live your comment now.
+            </h4>
+          </div>
         )}
       </div>
     );

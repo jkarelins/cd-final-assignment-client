@@ -25,7 +25,21 @@ class MyEvents extends Component {
           </div>
         );
       } else {
-        return <h4>Sorry, You are not selling tickets.</h4>;
+        return (
+          <h5 className="mt-3">
+            Sorry, You have not posted tickets before. Add You first tiket now!{" "}
+            <span
+              className="btn btn-info my-3"
+              onClick={this.props.switchContent}
+            >
+              Choose event
+            </span>{" "}
+            or{" "}
+            <Link to="/create-event" className="btn btn-info my-3">
+              Add new event
+            </Link>{" "}
+          </h5>
+        );
       }
     } else {
       return <h4>Loading..</h4>;
