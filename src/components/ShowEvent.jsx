@@ -9,8 +9,7 @@ const initialState = {
   ticketDescription: "",
   price: 10,
   image: "",
-  error: "",
-  riskCalculated: false
+  error: ""
 };
 
 class ShowEvent extends Component {
@@ -65,9 +64,6 @@ class ShowEvent extends Component {
         addTicket: false
       });
     }
-    if (this.state.riskCalculated === false) {
-      this.setState({ ...this.state, riskCalculated: true });
-    }
   };
 
   calculateRisk = tickets => {
@@ -77,18 +73,20 @@ class ShowEvent extends Component {
       }, 0) / tickets.length;
 
     tickets.forEach(ticket => {
-      let risk = ticket.risk;
-      risk = ticket.comments.length <= 3 ? risk : risk + 5;
-      const diff = -Math.round((ticket.price / average - 1) * 100);
-      risk = diff <= -10 ? (risk = risk - 10) : (risk = risk + diff);
-      risk = Math.max(5, risk);
-      ticket.risk = Math.min(95, risk);
+      if (!ticket.modifiedRisk) {
+        let risk = ticket.risk;
+        risk = ticket.comments.length <= 3 ? risk : risk + 5;
+        const diff = -Math.round((ticket.price / average - 1) * 100);
+        risk = diff <= -10 ? (risk = risk - 10) : (risk = risk + diff);
+        risk = Math.max(5, risk);
+        ticket.modifiedRisk = Math.min(95, risk);
+      }
     });
   };
 
   render() {
     if (this.props.event) {
-      if (this.props.event.tickets && !this.state.riskCalculated) {
+      if (this.props.event.tickets) {
         const { tickets } = this.props.event;
         this.calculateRisk(tickets);
       }
@@ -240,21 +238,21 @@ class ShowEvent extends Component {
                         </tr>
                       ) : (
                         this.props.event.tickets
-                          .sort((a, b) => a.risk - b.risk)
+                          .sort((a, b) => a.modifiedRisk - b.modifiedRisk)
                           .map((ticket, i) => (
                             <tr key={i}>
                               <th scope="row">{i + 1}</th>
                               <td>{ticket.user.username}</td>
                               <td>
                                 <Link to={`/ticket/${ticket.id}`}>
-                                  {ticket.price} - {ticket.risk}
+                                  {ticket.price} - {ticket.modifiedRisk}
                                 </Link>
                               </td>
                               <td
                                 className={
-                                  ticket.risk < 33
+                                  ticket.modifiedRisk < 33
                                     ? `text-success`
-                                    : ticket.risk < 66
+                                    : ticket.modifiedRisk < 66
                                     ? "text-warning"
                                     : "text-danger"
                                 }
