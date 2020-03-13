@@ -4,29 +4,7 @@ import { Link } from "react-router-dom";
 import { fetchEvent } from "../actions/event";
 import ShowEvent from "./ShowEvent";
 
-const initialState = {
-  name: "",
-  logo: "",
-  eventDate: "2021-12-31",
-  description: ""
-};
-
 class UpdateAndShowEvent extends Component {
-  state = initialState;
-
-  handleChange = e => {
-    e.preventDefault();
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  submitNewEvent = e => {
-    e.preventDefault();
-    this.props.createEvent(this.state);
-    this.setState(initialState);
-  };
-
   componentDidMount() {
     if (this.props.match.params.id) {
       const { id } = this.props.match.params;
@@ -34,12 +12,9 @@ class UpdateAndShowEvent extends Component {
     }
   }
 
-  showToEdit = (state = this.state) => {
-    this.setState({ state, updateEvent: !this.state.updateEvent });
-  };
-
   render() {
     if (this.props.event.selectedEvent) {
+      console.log(this.props.event.selectedEvent.tickets);
       return (
         <div className="container">
           <div className="col mt-3">
