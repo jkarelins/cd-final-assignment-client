@@ -65,7 +65,6 @@ const ticketCreateSuccess = ticket => ({
 
 export const createTicket = (ticketId, data) => (dispatch, getState) => {
   const { userReducer } = getState();
-  // console.log(data, " from creation......");
   const { jwt } = userReducer;
   axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
