@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const initialState = {
   offset: 0,
-  limit: 3
+  limit: 9
 };
 
 class AllEvents extends Component {

@@ -90,7 +90,7 @@ class ShowEvent extends Component {
         const { tickets } = this.props.event;
         this.calculateRisk(tickets);
       }
-
+      console.log();
       return (
         <Fragment>
           <div className="container">
@@ -151,12 +151,17 @@ class ShowEvent extends Component {
                     </div>
                   </div>
                   <div className="card mt-3">
-                    <button
-                      onClick={this.addTicket}
-                      className="btn btn-success"
-                    >
-                      Add New Ticket
-                    </button>
+                    {new Date(this.props.event.eventDate) - new Date() > 0 ? (
+                      <button
+                        onClick={this.addTicket}
+                        className="btn btn-success"
+                      >
+                        Add New Ticket
+                      </button>
+                    ) : (
+                      ""
+                    )}
+
                     {this.state.addTicket ? (
                       <form onSubmit={e => this.submitNewTicket(e)}>
                         <div className="form-group mt-3">
