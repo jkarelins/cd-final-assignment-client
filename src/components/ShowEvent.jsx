@@ -90,7 +90,6 @@ class ShowEvent extends Component {
         const { tickets } = this.props.event;
         this.calculateRisk(tickets);
       }
-      console.log();
       return (
         <Fragment>
           <div className="container">
@@ -250,7 +249,7 @@ class ShowEvent extends Component {
                               <td>{ticket.user.username}</td>
                               <td>
                                 <Link to={`/ticket/${ticket.id}`}>
-                                  {ticket.price} - {ticket.modifiedRisk}
+                                  {ticket.price},-
                                 </Link>
                               </td>
                               <td
