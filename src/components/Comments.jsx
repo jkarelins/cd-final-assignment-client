@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import { sendNewComment } from "../actions/event";
 import { connect } from "react-redux";
 
@@ -62,7 +63,10 @@ class Comments extends Component {
           </form>
         ) : (
           <div>
-            <p>You should Log In or Sign Up to comment on Tickets</p>
+            <p>
+              You should <Link to="/login">Login</Link> or{" "}
+              <Link to="/register">SignUp</Link> to comment on Tickets
+            </p>
           </div>
         )}
 

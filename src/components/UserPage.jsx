@@ -14,25 +14,23 @@ class UserPage extends Component {
 
   render() {
     return (
-      <div className="container">
-        <div className="row mt-3">
-          <div className="col-3 mt-3">
-            <ul className="list-group">
-              <li className="list-group-item btn">
-                <Link to="/create-event">Create New Event</Link>
-              </li>
-              <li className="list-group-item btn" onClick={this.switchContent}>
-                {this.state.allEvents ? "Show My Tickets" : "Show All Events"}
-              </li>
-            </ul>
-          </div>
-          <div className="col-7">
-            {this.state.allEvents ? (
-              <AllEvents />
-            ) : (
-              <MyTickets switchContent={this.switchContent} />
-            )}
-          </div>
+      <div className="row mt-3">
+        <div className="col-3 mt-3 ml-3">
+          <ul className="list-group">
+            <li className="list-group-item btn">
+              <Link to="/create-event">Create New Event</Link>
+            </li>
+            <li className="list-group-item btn" onClick={this.switchContent}>
+              {this.state.allEvents ? "Show My Tickets" : "Show All Events"}
+            </li>
+          </ul>
+        </div>
+        <div className="col-7">
+          {this.state.allEvents ? (
+            <AllEvents />
+          ) : (
+            <MyTickets switchContent={this.switchContent} />
+          )}
         </div>
       </div>
     );

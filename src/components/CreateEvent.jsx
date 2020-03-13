@@ -8,7 +8,8 @@ const initialState = {
   name: "",
   logo: "",
   eventDate: "2021-12-31",
-  description: ""
+  description: "",
+  warning: ""
 };
 
 class CreateEvent extends Component {
@@ -16,6 +17,7 @@ class CreateEvent extends Component {
 
   handleChange = e => {
     e.preventDefault();
+    this.checkDate(this.state.eventDate);
     this.setState({
       [e.target.name]: e.target.value
     });
@@ -26,6 +28,30 @@ class CreateEvent extends Component {
     this.props.createEvent(this.state);
     this.props.history.push(`/`);
   };
+
+  checkDate = dateString => {
+    const date = new Date(dateString);
+    let tomorrow = new Date();
+    tomorrow = new Date(
+      tomorrow.getFullYear(),
+      tomorrow.getMonth(),
+      tomorrow.getDate() + 1
+    );
+    // console.log(date - tomorrow, tomorrow);
+    if (date - tomorrow < 0) {
+      this.setState({
+        ...this.state,
+        warning:
+          "Date of event can not be in the past! If You add Event from the past, it is not going to be available in event List."
+      });
+    } else {
+      this.setState({
+        ...this.state,
+        warning: ""
+      });
+    }
+  };
+
   render() {
     if (this.props.user) {
       return (
@@ -69,6 +95,9 @@ class CreateEvent extends Component {
                   className="form-control"
                   required
                 />
+                <small className="text-danger">
+                  {this.state.warning ? this.state.warning : ""}
+                </small>
               </div>
               <div className="form-group">
                 <label htmlFor="eventDescription">Event Description</label>

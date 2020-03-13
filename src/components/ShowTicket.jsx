@@ -56,6 +56,16 @@ class ShowTicket extends Component {
     }
   }
 
+  convertToDate = seqDate => {
+    const newDate = new Date(seqDate);
+    const dateAndTime = {
+      date: newDate.toDateString(),
+      hours: newDate.getHours(),
+      minutes: newDate.getMinutes()
+    };
+    return `${dateAndTime.date}, @${dateAndTime.hours}:${dateAndTime.minutes}`;
+  };
+
   render() {
     if (this.props.ticket) {
       if (this.state.editMode) {
@@ -142,7 +152,12 @@ class ShowTicket extends Component {
                   src={this.props.ticket.image}
                   alt={`Ticket for ${this.props.ticket.event.name}`}
                 />
+
                 <p className="card-text mt-3">
+                  <small>
+                    Posted on: {this.convertToDate(this.props.ticket.createdAt)}
+                  </small>
+                  <br />
                   {this.props.ticket.ticketDescription}
                 </p>
                 <div>
@@ -158,10 +173,13 @@ class ShowTicket extends Component {
                         </button>
                       </div>
                     ) : (
-                      <p>You can edit your tickets.</p>
+                      <p>You can edit your tickets ONLY.</p>
                     )
                   ) : (
-                    <p>You can edit your tickets.</p>
+                    <p>
+                      To edit Ticket <Link to="/login">Login</Link> or{" "}
+                      <Link to="/register">SignUp</Link>
+                    </p>
                   )}
                 </div>
               </div>
