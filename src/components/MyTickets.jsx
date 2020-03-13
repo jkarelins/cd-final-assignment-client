@@ -12,16 +12,33 @@ class MyEvents extends Component {
     if (this.props.userTickets) {
       if (this.props.userTickets.length !== 0) {
         return (
-          <div>
-            <ul>
-              {this.props.userTickets.map((ticket, i) => (
-                <li key={i}>
-                  <Link to={`/ticket/${ticket.id}`}>
-                    {ticket.price} EUR -> {ticket.eventId} - Event ID
-                  </Link>
-                </li>
-              ))}
-            </ul>
+          <div className="row">
+            {this.props.userTickets.map((ticket, i) => (
+              <div className="col-4" key={i}>
+                <div className="card mt-3">
+                  <img
+                    className="card-img-top"
+                    src={ticket.event.logo}
+                    alt={ticket.event.name}
+                  />
+                  <div className="card-body">
+                    <h5 className="card-title">
+                      {ticket.event.name.substring(0, 20)}
+                    </h5>
+
+                    <h6 className="card-subtitle mb-2 text-muted">
+                      {ticket.price} EUR
+                    </h6>
+                    <p className="card-text">
+                      {ticket.ticketDescription.substring(0, 70)}
+                    </p>
+                    <Link to={`/ticket/${ticket.id}`} className="card-link">
+                      Show Ticket
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         );
       } else {

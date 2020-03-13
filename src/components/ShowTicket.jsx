@@ -68,6 +68,7 @@ class ShowTicket extends Component {
 
   render() {
     if (this.props.ticket) {
+      console.log(this.props.ticket.risk);
       if (this.state.editMode) {
         return (
           <div className="container">
@@ -137,6 +138,23 @@ class ShowTicket extends Component {
             <Link to="/" className="btn btn-info">
               Go Home
             </Link>
+            <div className="row mt-3 ml-1">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/">Home</Link>
+                  </li>
+                  <li className="breadcrumb-item">
+                    <Link to={`/event/${this.props.ticket.event.id}`}>
+                      {this.props.ticket.event.name.substring(0, 25)}
+                    </Link>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    {this.props.ticket.ticketDescription.substring(0, 30)}
+                  </li>
+                </ol>
+              </nav>
+            </div>
             <div className="card p-3 mt-3">
               <div className="card-header">
                 <h4 className="">
