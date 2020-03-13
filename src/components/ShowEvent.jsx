@@ -75,7 +75,6 @@ class ShowEvent extends Component {
         ticket.risk = Math.min(95, risk);
       });
     }
-    console.log(this.props.event.eventEndDate === this.props.event.eventDate);
     return (
       <Fragment>
         <div className="col-12 col-lg-4 col-xl-4 mt-3">
@@ -86,18 +85,6 @@ class ShowEvent extends Component {
           ) : (
             ""
           )}
-          <div className="row ml-1">
-            <nav aria-label="breadcrumb">
-              <ol className="breadcrumb">
-                <li className="breadcrumb-item">
-                  <Link to="/">Home</Link>
-                </li>
-                <li className="breadcrumb-item active" aria-current="page">
-                  {this.props.event.name.substring(0, 25)}
-                </li>
-              </ol>
-            </nav>
-          </div>
           <div className="card">
             <img
               src={this.props.event.logo}

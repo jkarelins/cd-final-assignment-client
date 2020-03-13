@@ -48,7 +48,7 @@ class AllEvents extends Component {
                   <h5 className="card-title">{event.name}</h5>
 
                   <Link to={`/event/${event.id}`} className="btn btn-primary">
-                    SHOW TICKETS
+                    SHOW EVENT
                   </Link>
                 </div>
               </div>

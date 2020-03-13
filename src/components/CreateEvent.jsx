@@ -69,7 +69,6 @@ class CreateEvent extends Component {
   };
 
   showEndDate = () => {
-    console.log(this.state.hideEndDate);
     if (this.state.hideEndDate) {
       this.setState({
         ...this.state,

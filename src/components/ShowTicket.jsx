@@ -68,7 +68,6 @@ class ShowTicket extends Component {
 
   render() {
     if (this.props.ticket) {
-      console.log(this.props.ticket.risk);
       if (this.state.editMode) {
         return (
           <div className="container">
@@ -135,9 +134,6 @@ class ShowTicket extends Component {
 
         return (
           <div className="container mb-5">
-            <Link to="/" className="btn btn-info">
-              Go Home
-            </Link>
             <div className="row mt-3 ml-1">
               <nav aria-label="breadcrumb">
                 <ol className="breadcrumb">

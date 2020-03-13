@@ -42,15 +42,26 @@ class UpdateAndShowEvent extends Component {
     if (this.props.event.selectedEvent) {
       return (
         <div className="container">
-          <Link to="/" className="btn btn-info">
-            Go Home
-          </Link>
-          <div className="row">
-            <ShowEvent
-              event={this.props.event.selectedEvent}
-              user={this.props.user}
-              showToEdit={this.showToEdit}
-            />
+          <div className="col mt-3">
+            <div className="row ml-1">
+              <nav aria-label="breadcrumb">
+                <ol className="breadcrumb">
+                  <li className="breadcrumb-item">
+                    <Link to="/">Home</Link>
+                  </li>
+                  <li className="breadcrumb-item active" aria-current="page">
+                    {this.props.event.selectedEvent.name.substring(0, 25)}
+                  </li>
+                </ol>
+              </nav>
+            </div>
+            <div className="row">
+              <ShowEvent
+                event={this.props.event.selectedEvent}
+                user={this.props.user}
+                showToEdit={this.showToEdit}
+              />
+            </div>
           </div>
         </div>
       );
