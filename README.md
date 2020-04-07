@@ -31,3 +31,13 @@ Application was built as a final assignment for Codaisseur Academy Full Stack co
 - [JSONWebToken](https://www.npmjs.com/package/jsonwebtoken)
 - [PostrgeSQL](https://www.postgresql.org/)
 - [Sequelize](https://sequelize.org/)
+
+## Installation guide on local machine
+
+- Clone repository
+- cd to directoy
+- Run: npm install
+- npm run start
+
+**To run React frontend client of the project you should first run API server on your local machine**
+[Server repository](https://github.com/jkarelins/cd-final-assignment-server)
