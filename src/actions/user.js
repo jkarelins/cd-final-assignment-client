@@ -6,56 +6,57 @@ const LOG_OUT_USER = "LOG_OUT_USER";
 const USER_ACTION_ERROR = "USER_ACTION_ERROR";
 const CLEAR_ERRORS = "CLEAR_ERRORS";
 
-const baseUrl = "http://localhost:4000";
+// const baseUrl = "http://localhost:4000";
+const baseUrl = "https://vast-oasis-50496.herokuapp.com";
 
-const userCreateError = error => ({
+const userCreateError = (error) => ({
   type: USER_ACTION_ERROR,
-  error
+  error,
 });
 
-const userCreateSuccess = user => ({
+const userCreateSuccess = (user) => ({
   type: SIGN_UP_USER,
-  user
+  user,
 });
 
-export const clearErrors = () => dispatch => {
+export const clearErrors = () => (dispatch) => {
   dispatch({ type: CLEAR_ERRORS });
 };
 
-export const createUser = data => dispatch => {
+export const createUser = (data) => (dispatch) => {
   axios
     .post(`${baseUrl}/user/create`, { ...data })
-    .then(response => {
+    .then((response) => {
       dispatch(userCreateSuccess(response.data));
       dispatch(clearErrors());
     })
-    .catch(err => dispatch(userCreateError(err.response)));
+    .catch((err) => dispatch(userCreateError(err.response)));
 };
 
-const userLoginSuccess = user => ({
+const userLoginSuccess = (user) => ({
   type: LOG_IN_USER,
-  user
+  user,
 });
 
-export const loginUser = data => dispatch => {
+export const loginUser = (data) => (dispatch) => {
   axios
     .post(`${baseUrl}/user/login`, { ...data })
-    .then(response => {
+    .then((response) => {
       dispatch(userLoginSuccess(response.data));
       dispatch(clearErrors());
     })
-    .catch(err => dispatch(userCreateError(err.response)));
+    .catch((err) => dispatch(userCreateError(err.response)));
 };
 
-const userTicketsFetchSuccess = user => ({
+const userTicketsFetchSuccess = (user) => ({
   type: FETCH_USER_TICKETS,
-  tickets: user.tickets
+  tickets: user.tickets,
 });
 
-export const fetchUserTickets = userId => dispatch => {
+export const fetchUserTickets = (userId) => (dispatch) => {
   axios
     .get(`${baseUrl}/user/${userId}`)
-    .then(response => {
+    .then((response) => {
       dispatch(userTicketsFetchSuccess(response.data));
     })
     .catch(console.error);
@@ -63,9 +64,9 @@ export const fetchUserTickets = userId => dispatch => {
 
 const userLogOutSuccess = () => ({
   type: LOG_OUT_USER,
-  logout: true
+  logout: true,
 });
 
-export const logMeOut = () => dispatch => {
+export const logMeOut = () => (dispatch) => {
   dispatch(userLogOutSuccess());
 };

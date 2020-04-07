@@ -1,5 +1,6 @@
 import axios from "axios";
-const baseUrl = "http://localhost:4000";
+// const baseUrl = "http://localhost:4000";
+const baseUrl = "https://vast-oasis-50496.herokuapp.com";
 
 const CREATE_NEW_EVENT = "CREATE_NEW_EVENT";
 const FETCH_ALL_EVENTS = "FETCH_ALL_EVENTS";
@@ -9,58 +10,58 @@ const FETCH_ONE_TICKET = "FETCH_ONE_TICKET";
 const UPDATE_TICKET = "UPDATE_TICKET";
 const CREATE_NEW_COMMENT = "CREATE_NEW_COMMENT";
 
-const eventCreateSuccess = event => ({
+const eventCreateSuccess = (event) => ({
   type: CREATE_NEW_EVENT,
-  event
+  event,
 });
 
-export const createEvent = data => (dispatch, getState) => {
+export const createEvent = (data) => (dispatch, getState) => {
   const { userReducer } = getState();
   const { jwt } = userReducer;
   axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
   axios
     .post(`${baseUrl}/event/create`, {
-      ...data
+      ...data,
     })
-    .then(response => {
+    .then((response) => {
       dispatch(eventCreateSuccess(response.data));
     })
     .catch(console.error);
 };
 
-const eventsFetchSuccess = events => ({
+const eventsFetchSuccess = (events) => ({
   type: FETCH_ALL_EVENTS,
-  events
+  events,
 });
 
-export const fetchEvents = page => dispatch => {
+export const fetchEvents = (page) => (dispatch) => {
   axios
     .get(`${baseUrl}/event/allevents?offset=${page}`)
-    .then(response => {
+    .then((response) => {
       dispatch(eventsFetchSuccess(response));
     })
     .catch(console.error);
 };
 
-const eventFetchSuccess = event => ({
+const eventFetchSuccess = (event) => ({
   type: FETCH_ONE_EVENT,
-  event
+  event,
 });
 
-export const fetchEvent = id => dispatch => {
+export const fetchEvent = (id) => (dispatch) => {
   axios
     .get(`${baseUrl}/event/${id}`)
-    .then(res => {
+    .then((res) => {
       dispatch(eventFetchSuccess(res.data));
     })
     .catch(console.error);
 };
 
 // _______________ Tickets:_________________________________
-const ticketCreateSuccess = ticket => ({
+const ticketCreateSuccess = (ticket) => ({
   type: CREATE_NEW_TICKET,
-  ticket
+  ticket,
 });
 
 export const createTicket = (ticketId, data) => (dispatch, getState) => {
@@ -70,45 +71,45 @@ export const createTicket = (ticketId, data) => (dispatch, getState) => {
 
   axios
     .post(`${baseUrl}/event/${ticketId}/ticket`, {
-      ...data
+      ...data,
     })
-    .then(response => {
+    .then((response) => {
       dispatch(ticketCreateSuccess(response.data));
     })
     .catch(console.error);
 };
 
 // FETCH SINGLE TICKET
-const ticketFetchSuccess = ticket => ({
+const ticketFetchSuccess = (ticket) => ({
   type: FETCH_ONE_TICKET,
-  ticket
+  ticket,
 });
 
-export const fetchTicket = ticketId => (dispatch, getState) => {
+export const fetchTicket = (ticketId) => (dispatch, getState) => {
   axios
     .get(`${baseUrl}/ticket/${ticketId}`)
-    .then(res => {
+    .then((res) => {
       dispatch(ticketFetchSuccess(res.data));
     })
     .catch(console.error);
 };
 
 // UPDATE TICKET
-const ticketUpdateSuccess = ticket => ({
+const ticketUpdateSuccess = (ticket) => ({
   type: UPDATE_TICKET,
-  ticket
+  ticket,
 });
 
-export const updateTicket = data => (dispatch, getState) => {
+export const updateTicket = (data) => (dispatch, getState) => {
   const { userReducer } = getState();
   const { jwt } = userReducer;
   axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
   axios
     .post(`${baseUrl}/ticket/${data.id}`, {
-      ...data
+      ...data,
     })
-    .then(async response => {
+    .then(async (response) => {
       // await fetchTicket(response.data.id);
       dispatch(ticketUpdateSuccess(response.data));
     })
@@ -116,21 +117,21 @@ export const updateTicket = data => (dispatch, getState) => {
 };
 
 // POST NEW COMMENT
-const newCommentSuccess = data => ({
+const newCommentSuccess = (data) => ({
   type: CREATE_NEW_COMMENT,
-  data
+  data,
 });
 
-export const sendNewComment = data => (dispatch, getState) => {
+export const sendNewComment = (data) => (dispatch, getState) => {
   const { userReducer } = getState();
   const { jwt } = userReducer;
   axios.defaults.headers.common["Authorization"] = `Bearer ${jwt}`;
 
   axios
     .post(`${baseUrl}/ticket/${data.ticketId}/comment`, {
-      text: data.text
+      text: data.text,
     })
-    .then(response => {
+    .then((response) => {
       dispatch(newCommentSuccess(response.data));
     })
     .catch(console.error);
